@@ -11,12 +11,13 @@
 //Assigning Verticies (GLFloat for Security)
 GLfloat verticies[] =
 {
-	-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
-	0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
-	0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f, // Upper corner
-	-0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner left
-	0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner right
-	0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f // Inner down
+	//		   COORDINATES								Colours 
+	-0.5f, -0.5f * float(sqrt(3)) / 3,		 0.0f, 0.8f, 0.3f,  0.02f,		 // Lower left corner
+	 0.5f, -0.5f * float(sqrt(3)) / 3,		 0.0f, 0.8f, 0.3f,  0.02f,		 // Lower right corner
+	 0.0f,  0.5f * float(sqrt(3)) * 2 / 3,	 0.0f, 1.0f, 0.6f,  0.32f,		 // Upper corner
+	-0.25f, 0.5f * float(sqrt(3)) / 6,		 0.0f, 0.9f, 0.45f, 0.17f,		 // Inner left
+	 0.25f, 0.5f * float(sqrt(3)) / 6,		 0.0f, 0.9f, 0.45f, 0.17f,		 // Inner right
+	 0.0f, -0.5f * float(sqrt(3)) / 3,		 0.0f, 0.8f, 0.3f,  0.02f		 // Inner down
 };
 
 GLuint indices[] =
@@ -61,16 +62,22 @@ int main()
 	VBO VBO1(verticies, sizeof(verticies));
 	EBO EBO1(indices, sizeof(indices));
 
-	VAO1.LinkVBO(VBO1, 0);
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
+	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
+
+	GLint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+
 
 	while (!glfwWindowShouldClose(window)) //Main program loop
 	{
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f); //Background Colour
 		glClear(GL_COLOR_BUFFER_BIT);
 		shaderProgram.Activate();
+		glUniform1f(uniID, 0.5f);
 		VAO1.Bind();
 		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 		glfwSwapBuffers(window);
