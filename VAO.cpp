@@ -6,7 +6,7 @@ VAO::VAO()
 
 }
 
-void VAO::LinkAttrib(VBO VBO, GLuint layout, GLint numComponents, GLenum type, GLsizeiptr stride, void* offset)
+void VAO::LinkAttrib(VBO& VBO, GLuint layout, GLint numComponents, GLenum type, GLsizeiptr stride, void* offset)
 {
 	VBO.Bind();
 	glVertexAttribPointer(layout, numComponents, type, GL_FALSE, stride, offset); //Way to communicate with the shader from external
