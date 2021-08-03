@@ -11,6 +11,7 @@
 #include"VBO.h"
 #include"EBO.h"
 #include"Texture.h"
+#include"Camera.h"
 
 const unsigned int width = 800;
 const unsigned int height = 800;
@@ -81,16 +82,16 @@ int main()
 	VBO1.Unbind();
 	EBO1.Unbind();
 
-	GLint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+	
 
 	// Texture assignment 
 	Texture spongeBob("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	spongeBob.texUnit(shaderProgram, "tex0", 0);
 
-	float roation = 0.0f;
-	double prevTime = glfwGetTime();
 
 	glEnable(GL_DEPTH_TEST);
+
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
 	while (!glfwWindowShouldClose(window)) //Main program loop
 	{
@@ -98,35 +99,18 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shaderProgram.Activate();
 
+		camera.Inputs(window);
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+
+
+
+
+
 		//3D space Data
 
-		glm::mat4 model = glm::mat4(1.0f); //Initialisation of Model matrix
-		glm::mat4 view = glm::mat4(1.0f); //Initialisation of View Matrix
-		glm::mat4 proj = glm::mat4(1.0f); //Initialisation of Projection Matrix
-
-		double crntTime = glfwGetTime();
-
-		//Spin on on time
-		if (crntTime - prevTime >= 1 / 60)
-		{
-			roation += 0.5f;
-			prevTime = crntTime;
-		}
-
-		model = glm::rotate(model, glm::radians(roation), glm::vec3(0.0f, 1.0f, 0.0f));
-		view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f)); //Offset for begining
-		proj = glm::perspective(glm::radians(45.0f), (float)(width / height), 0.1f, 100.0f); //If closer than 0.1 or further than 100 clip
-
-		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-
-		glUniform1f(uniID, 0.5f);
+		//glm::mat4 model = glm::mat4(1.0f); //Initialisation of Model matrix
+		//glm::mat4 view = glm::mat4(1.0f); //Initialisation of View Matrix
+		//glm::mat4 proj = glm::mat4(1.0f); //Initialisation of Projection Matrix
 
 		spongeBob.Bind();
 

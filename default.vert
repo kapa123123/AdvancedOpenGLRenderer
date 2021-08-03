@@ -12,17 +12,11 @@ out vec3 color; //Output aColor from the vertecies Array
 
 out vec2 texCoord;
 
-uniform float scale; //Scale of Primative
-
-
-
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 proj;
+uniform mat4 camMatrix;
 
 void main()
 {
-   gl_Position = proj * view * model * vec4(aPos, 1.0);
+   gl_Position = camMatrix * vec4(aPos, 1.0);
    color = aColor;
    texCoord = aTex;
 }
