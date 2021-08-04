@@ -1,3 +1,7 @@
 ﻿  Main.cpp
 C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.h(28,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Mesh.cpp
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.h(28,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Mesh.cpp(57,65): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Generating Code...
   AdvancedOpenGLRenderer.vcxproj -> C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\x64\Debug\AdvancedOpenGLRenderer.exe
