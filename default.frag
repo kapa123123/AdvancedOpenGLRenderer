@@ -1,26 +1,29 @@
 #version 330 core
 
+// Outputs colors in RGBA
 out vec4 FragColor;
 
+// Imports the current position from the Vertex Shader
 in vec3 crntPos;
+// Imports the normal from the Vertex Shader
 in vec3 Normal;
-
-
-
+// Imports the color from the Vertex Shader
 in vec3 color;
-
+// Imports the texture coordinates from the Vertex Shader
 in vec2 texCoord;
 
 
 
-
+// Gets the Texture Units from the main function
 uniform sampler2D diffuse0;
-
 uniform sampler2D specular0;
-
+// Gets the color of the light from the main function
 uniform vec4 lightColor;
+// Gets the position of the light from the main function
 uniform vec3 lightPos;
+// Gets the position of the camera from the main function
 uniform vec3 camPos;
+
 
 vec4 pointLight()
 {	
@@ -49,7 +52,6 @@ vec4 pointLight()
 	float specular = specAmount * specularLight;
 
 	return (texture(diffuse0, texCoord) * (diffuse * inten + ambient) + texture(specular0, texCoord).r * specular * inten) * lightColor;
-
 }
 
 vec4 direcLight()
@@ -74,6 +76,7 @@ vec4 direcLight()
 
 vec4 spotLight()
 {
+	// controls how big the area that is lit up is
 	float outerCone = 0.90f;
 	float innerCone = 0.95f;
 
@@ -102,7 +105,6 @@ vec4 spotLight()
 
 void main()
 {
-	
-
-   FragColor = spotLight(); //Choose which light Wanted in scene
+	// outputs final color
+	FragColor = direcLight();
 }
