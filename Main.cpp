@@ -79,9 +79,31 @@ int main()
 	// Original code from the tutorial
 	 Model model("models/map/scene.gltf");
 
+	 //Creation of FPS Count
+	 double prevTime = 0.0;
+	 double crntTime = 0.0;
+	 double timeDiff;
+	 unsigned int counter = 0;
+
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
+		// FPS Count
+		crntTime = glfwGetTime();
+		timeDiff = crntTime - prevTime;
+		counter++;
+		if (timeDiff >= 1.0 / 30.0)
+		{
+			std::string FPS = std::to_string((1.0 / timeDiff) * counter);
+			std::string ms = std::to_string((timeDiff / counter) * 1000);
+			std::string newTitle = "OpenGL CW s5118418 - " + FPS + "Frams - " + ms + "ms";
+			glfwSetWindowTitle(window, newTitle.c_str());
+			prevTime = crntTime;
+			counter = 0;
+		}
+
+
+
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
@@ -104,7 +126,7 @@ int main()
 
 
 
-		outliningProgram.Activate();
+		//outliningProgram.Activate();
 		glUniform1f(glGetUniformLocation(outliningProgram.ID, "outlining"), 1.08f);
 		model.Draw(outliningProgram, camera);
 
@@ -115,7 +137,10 @@ int main()
 		// Enable the depth buffer
 		glEnable(GL_DEPTH_TEST);
 
- 
+		glEnable(GL_CULL_FACE); //Enable Face Culling
+		glCullFace(GL_BACK); //Set Front to be visable rear to not be 
+		glFrontFace(GL_CCW); //Set Counter clockwise Face Cull
+  
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
