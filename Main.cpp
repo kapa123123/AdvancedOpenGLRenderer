@@ -44,6 +44,9 @@ int main()
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
 
+	Shader outliningProgram("outlining.vert", "outlining.frag"); //Create outline shaders
+
+
 	// Take care of all the light related things
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -62,7 +65,10 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// Set Depth Buffer to Less
-	glDepthFunc(GL_LESS);
+	glDepthFunc(GL_LESS); //<< Depth Function
+	glEnable(GL_STENCIL_TEST);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
 
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
@@ -79,7 +85,7 @@ int main()
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear Each Frame
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT ); //Clear Each Frame
 
 		// Handles camera inputs
 		camera.Inputs(window);
@@ -87,7 +93,29 @@ int main()
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		// Draw a model
+		glStencilFunc(GL_ALWAYS, 1, 0xFF); //Stencel Buffer on Obj (disable primary and scale 
+		glStencilMask(0xFF); //
+
 		model.Draw(shaderProgram, camera);
+
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+		glStencilMask(0x00);
+		glDisable(GL_DEPTH_TEST);
+
+
+
+		outliningProgram.Activate();
+		glUniform1f(glGetUniformLocation(outliningProgram.ID, "outlining"), 1.08f);
+		model.Draw(outliningProgram, camera);
+
+		// Enable modifying of the stencil buffer
+		glStencilMask(0xFF);
+		// Clear stencil buffer
+		glStencilFunc(GL_ALWAYS, 0, 0xFF);
+		// Enable the depth buffer
+		glEnable(GL_DEPTH_TEST);
+
+ 
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
