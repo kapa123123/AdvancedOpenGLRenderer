@@ -7,12 +7,12 @@
 class EBO
 {
 public:
-	GLuint ID;
+	GLuint ID; //Identify type in EBO 
 	EBO(std::vector<GLuint>& indices);
 
-	void Bind();
-	void Unbind();
-	void Delete();
+	void Bind(); //Bind to the EBO
+	void Unbind(); //Clear the EBO
+	void Delete(); //Delete program 
 };
 
 

@@ -10,19 +10,22 @@
 class Texture
 {
 public:
-	GLuint ID;
+	GLuint ID; //ID Type to allow multiple Textures
 	const char* type;
 	GLuint unit;
 
 	Texture(const char* image, const char* texType, GLuint slot);
 
-	// Assigns a texture unit to a texture
+	// Assign Texture
 	void texUnit(Shader& shader, const char* uniform, GLuint unit);
-	// Binds a texture
+
+	// Binds a to Object
 	void Bind();
-	// Unbinds a texture
+
+	// Unbline object to clear 
 	void Unbind();
-	// Deletes a texture
+
+	// Delete texture
 	void Delete();
 };
 

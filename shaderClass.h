@@ -9,22 +9,19 @@
 #include<iostream>
 #include<cerrno>
 
-std::string get_file_contents(const char* filename); //Function to Read shader Text files and outputs as stg
+std::string get_file_contents(const char* filename); //Read text file name for Shader Addtition 
 
 class Shader
 {
 	public: 
-		GLuint ID;
-		Shader(const char* vertexFile, const char* fragmentFile);
+		GLuint ID; //ID number for the shader Class
+		Shader(const char* vertexFile, const char* fragmentFile); //Shader type and creation 
 
-		void Activate();
-		void Delete();
+		void Activate(); //Activation of Shader (In Main)
+		void Delete(); //Delete Shader to properly clean ram (End of Main)
 
 	private:
-		void compileErrors(unsigned int shader, const char* type);
-
-
-
+		void compileErrors(unsigned int shader, const char* type); //Fail tester
 
 };
 

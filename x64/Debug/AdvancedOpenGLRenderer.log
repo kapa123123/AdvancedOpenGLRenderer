@@ -1,3 +1,20 @@
-﻿  Main.cpp
-C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.h(28,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+﻿  Camera.cpp
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.h(29,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.cpp(72,14): warning C4305: '=': truncation from 'double' to 'float'
+  EBO.cpp
+  Main.cpp
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.h(29,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Mesh.cpp
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.h(29,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Mesh.cpp(74,65): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Model.cpp
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Camera.h(29,15): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Model.cpp(237,93): warning C4267: 'argument': conversion from 'size_t' to 'GLuint', possible loss of data
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\Model.cpp(244,95): warning C4267: 'argument': conversion from 'size_t' to 'GLuint', possible loss of data
+  Texture.cpp
+  VAO.cpp
+C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\VAO.cpp(12,63): warning C4244: 'argument': conversion from 'GLsizeiptr' to 'GLsizei', possible loss of data
+  VBO.cpp
+  shaderClass.cpp
+  Generating Code...
   AdvancedOpenGLRenderer.vcxproj -> C:\Users\Taylor\source\repos\AdvancedOpenGLRenderer\x64\Debug\AdvancedOpenGLRenderer.exe

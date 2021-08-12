@@ -1,8 +1,8 @@
 #include"Model.h"
 
 
-const unsigned int width = 800;
-const unsigned int height = 800;
+const unsigned int width = 800; //Window width 
+const unsigned int height = 800; //Window Height 
 
 
 int main()
@@ -10,30 +10,33 @@ int main()
 	// Initialize GLFW
 	glfwInit();
 
-	// Tell GLFW what version of OpenGL we are using 
-	// In this case we are using OpenGL 3.3
+	//Assign Version 3.3 Major and Minor as GLFW Version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	// Tell GLFW we are using the CORE profile
-	// So that means we only have the modern functions
+
+	//Activate Core Meaning we only access modern and no legacy content 
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
+	//Create Window with name etc
 	GLFWwindow* window = glfwCreateWindow(width, height, "S5118418 Lighting Engine", NULL, NULL);
-	// Error check if the window fails to create
+
+	// Error check - (If window fails to spawn)
 	if (window == NULL)
 	{
-		std::cout << "Failed to create GLFW window" << std::endl;
+		std::cout << "GLFW Error, Please review core content" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
-	// Introduce the window into the current context
+
+	// Set window to current context
 	glfwMakeContextCurrent(window);
 
-	//Load GLAD so it configures OpenGL
+
+
+	// Initialise GLAD Library
 	gladLoadGL();
-	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
+	
+	//Set viewport to current openGL window 
 	glViewport(0, 0, width, height);
 
 
@@ -41,42 +44,44 @@ int main()
 
 
 	// Generates Shader object using shaders default.vert and default.frag
-	Shader shaderProgram("default.vert", "default.frag");
+	Shader shaderProgram("default.vert", "default.frag"); //Default Program for renderering Object loader ETC
+	Shader outliningProgram("outlining.vert", "outlining.frag"); //Create outline shaders (Additn to outline models)
 
-	Shader outliningProgram("outlining.vert", "outlining.frag"); //Create outline shaders
 
-
-	// Take care of all the light related things
+	// Light Initialisation 
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::mat4 lightModel = glm::mat4(1.0f);
 	lightModel = glm::translate(lightModel, lightPos);
 
+
+
+	//Activate the Shader Program ONLY. If wanting the outline Also type outliningProgra.Activate();
 	shaderProgram.Activate();
+
+	//Assign Lighting to current context
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-
-
-
-
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
 
 	// Set Depth Buffer to Less
 	glDepthFunc(GL_LESS); //<< Depth Function
-	glEnable(GL_STENCIL_TEST);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	glEnable(GL_STENCIL_TEST); //<< Stencel Function assignment 
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); //Set up Stencel Operation 
 
 
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
 
-
-
-	// Original code from the tutorial
+	// - - - - Model Import - - - - 
+	//Model Import functionalisty 
 	 Model model("models/map/scene.gltf");
+
+
+
 
 	 //Creation of FPS Count
 	 double prevTime = 0.0;

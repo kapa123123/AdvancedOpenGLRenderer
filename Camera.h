@@ -11,28 +11,29 @@
 
 #include "shaderClass.h"
 
+//Camera Class for moving around a 3D space
 class Camera
 {
 	public:
-		glm::vec3 Position;
-		glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
-		glm::mat4 cameraMatrix = glm::mat4(1.0f); 
+		glm::vec3 Position; //Current Position stored X, Y, Z
+		glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f); //Orientation (Used to lock orientation preventing upsidown)
+		glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f); //UpSpeed for vertical Movement 
+		glm::mat4 cameraMatrix = glm::mat4(1.0f); //Matrix for storing core values
 
 		 
-		bool firstClick = true;
+		bool firstClick = true; //Bool Value for re-centering camera on click 
 
-		int width;
-		int height;
+		int width; //Width of Cam view
+		int height; //Height of Cam View
 
-		float speed = 0.1; //Speed Debug Camera Flys In
-		float sensitivity = 100.0f; //Sensitivity of Mouse Input
+		float speed = 0.1; //Speed of camera 
+		float sensitivity = 100.0f; //Mouse sensitivity
 
-		Camera(int width, int height, glm::vec3 position);
+		Camera(int width, int height, glm::vec3 position); //Camera Struct
 
-		void updateMatrix(float FOVdeg, float nearPlane, float farPlane);
-		void Matrix(Shader& shader, const char* uniform);
-		void Inputs(GLFWwindow* window);
+		void updateMatrix(float FOVdeg, float nearPlane, float farPlane); //Movement of Camera
+		void Matrix(Shader& shader, const char* uniform); //Movement in 3D Plane
+		void Inputs(GLFWwindow* window); //Get Keyboard Inputs from Keypads. 
 
 };
 

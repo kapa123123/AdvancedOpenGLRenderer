@@ -84,11 +84,11 @@ vec4 direcLight()
 vec4 spotLight()
 {
 	// controls how big the area that is lit up is
-	float outerCone = 0.90f;
+	float outerCone = 0.98f;
 	float innerCone = 0.95f;
 
 	// ambient lighting
-	float ambient = 0.20f;
+	float ambient = 0.50f;
 
 	// diffuse lighting
 	vec3 normal = normalize(Normal);
@@ -117,5 +117,5 @@ vec4 spotLight()
 void main()
 {
 	// outputs final color
-	FragColor = pointLight();
+	FragColor = spotLight();
 }

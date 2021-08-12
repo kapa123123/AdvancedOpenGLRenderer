@@ -24,49 +24,49 @@ void Camera::Matrix(Shader& shader, const char* uniform)
 }
 void Camera::Inputs(GLFWwindow* window)
 {
-	//When W is played, Forward
+	// Move forward
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		Position += speed * Orientation;
 	}
 
-	//When A is played, Left
+	// Move Left
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
 		Position += speed * -glm::normalize(glm::cross(Orientation, Up));
 	}
 
-	//When S is played, Backwards
+	// Move Backwards
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
 		Position += speed * -Orientation;
 	}
 
-	//When D is played, Right
+	// Move Right
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		Position += speed * glm::normalize(glm::cross(Orientation, Up));
 	}
 
-	//When Space is played, Up
+	// Move Up
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
 		Position += speed * Up;
 	}
 
-	//When LCrt is played, Down
+	//Move Down
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
 		Position += speed * -Up;
 	}
 
-	//When Left shift is played, Nitrus
+	// Speed up
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
 		speed = 0.4f;
 	}
 
-	//If Shift is not pressed, Go to normal speed
+	// Return to standard speed 
 	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
 	{
 		speed = 0.1;
@@ -74,10 +74,10 @@ void Camera::Inputs(GLFWwindow* window)
 
 
 
-	//Hide/Show Mouse on Left Mouse Press
+	//Hide mouse button
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 	{
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); //Hide Cursor during mouse press
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); //Hide Cursor 
 
 		//Set mouse in the middle of the screen 
 		if (firstClick) 
@@ -86,17 +86,17 @@ void Camera::Inputs(GLFWwindow* window)
 			firstClick = false;
 		}
 
-		double mouseX; //Mouse X Pos 
-		double mouseY; //Mouse Y Pos
+		double mouseX; //Mouse X 
+		double mouseY; //Mouse Y
 		glfwGetCursorPos(window, &mouseX, &mouseY); //Store mouse X and Y for usage later
 
 		float rotX = sensitivity * (float)(mouseY - (height / 2)) / height; //Roatation X
 		float rotY = sensitivity * (float)(mouseX - (height / 2)) / height; //Roatation Y
 
-		//Set Orientation to that of Mouse X and Mouse Y retrospectively 
+		//Set Orientation of Mouse X and Mouse Y 
 		glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotX), glm::normalize(glm::cross(Orientation, Up)));
 
-		//Check rotation is not off axis and if not Move appropriately
+		//Check rotation 
 		if (!((glm::angle(newOrientation, Up) <= glm::radians(5.0f) or glm::angle(newOrientation, -Up) <= glm::radians(5.0f))))
 		{
 			Orientation = newOrientation;
